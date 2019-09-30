@@ -1,0 +1,15 @@
+.reference-text {
+  padding: 5px;
+}
+
+.correct {
+  color: green;
+}
+
+.incorrect {
+  color: red;
+}
+
+.unavailable {
+  color: gray;
+}
