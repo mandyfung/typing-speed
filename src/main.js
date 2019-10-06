@@ -6,7 +6,10 @@ class Main extends React.Component {
   constructor() {
     super();
     this.state = {
-      isStarted: false
+      isStarted: false,
+      grossWpm: 0,
+      netWpm: 0,
+      accuracy: 0
     };
   }
 
@@ -18,6 +21,14 @@ class Main extends React.Component {
   onStart = () => {
     this.setState({
       isStarted: true
+    });
+  };
+
+  onFinish = (grossWpm, netWpm, accuracy) => {
+    this.setState({
+      grossWpm: grossWpm,
+      netWpm: netWpm,
+      accuracy: accuracy
     });
   };
 
@@ -34,8 +45,14 @@ class Main extends React.Component {
           onTimerComplete={this.timerCompleted}
           isStarted={this.state.isStarted}
         />
-        <TypingArea onStart={this.onStart} isStarted={this.state.isStarted} />
+        <TypingArea
+          onStart={this.onStart}
+          isStarted={this.state.isStarted}
+          onFinish={this.onFinish}
+        />
         <button onClick={this.restart}>Restart</button>
+        Gross WPM: {this.state.grossWpm} Net WPM: {this.state.netWpm} Accuracy:{" "}
+        {this.state.accuracy}
       </div>
     );
   }

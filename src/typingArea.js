@@ -61,8 +61,35 @@ class TypingArea extends React.Component {
     }
   };
 
+  calculateTypingSpeed = () => {
+    let lastTypedIndex = this.state.wordCorrectness.findIndex(
+      word => word === this.WordCorrectnessEnum.UNAVAILABLE
+    );
+    let allTypedEntries = this.textSplit.slice(0, lastTypedIndex).join(" ")
+      .length;
+    let totalTypedWords = allTypedEntries / 5;
+    let totalTime = 0.05; // TODO: pass this in
+    let grossWpm = totalTypedWords / totalTime;
+    let incorrectWords = this.state.wordCorrectness.filter(
+      word => word === this.WordCorrectnessEnum.INCORRECT
+    ).length;
+    let netWpm = (totalTypedWords - incorrectWords) / totalTime;
+    let totalWords = this.textSplit.length;
+    let correctWords = this.state.wordCorrectness.filter(
+      word => word === this.WordCorrectnessEnum.CORRECT
+    ).length;
+    let accuracy = (correctWords / totalWords) * 100;
+
+    this.props.onFinish(
+      grossWpm.toFixed(1),
+      netWpm.toFixed(1),
+      Math.round(accuracy)
+    );
+  };
+
   componentDidUpdate(prevProps) {
     if (prevProps.isStarted && !this.props.isStarted) {
+      this.calculateTypingSpeed();
       this.refs.textbox.value = "";
       this.hasStarted = false;
       this.setState({

@@ -3,19 +3,17 @@ import React from "react";
 class Timer extends React.Component {
   constructor(props) {
     super(props);
-    // TODO: revert timer back to default 3 mins
     this.state = {
-      timeRemaining: 3,
+      timeRemaining: 180,
       min: 3,
       sec: this.padSingleDigitNumber(0)
     };
     this.intervalId = 0;
   }
 
-  // TODO: revert timer back to default 3 mins
   resetTimer = () => {
     this.setState({
-      timeRemaining: 3,
+      timeRemaining: 180,
       min: 3,
       sec: this.padSingleDigitNumber(0)
     });
